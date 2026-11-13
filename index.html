@@ -11,43 +11,50 @@
 :root{
   --bg:#0a0800;--surface:#111008;--surface2:#1a1500;--border:#2a2200;
   --orange:#f7931a;--orange-dim:#c4740e;--amber:#fbbf24;--green:#10b981;--red:#ef4444;
-  --text:#fef3c7;--muted:#78716c;
+  --text:#fef3c7;--muted:#78716c;--panel:#130f0b;--soft:#1c160d;
   --mono:'IBM Plex Mono',monospace;--display:'Bebas Neue',sans-serif;
 }
-body{background:var(--bg);color:var(--text);font-family:var(--mono);min-height:100vh;overflow-x:hidden}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);min-height:100vh;overflow-x:hidden; transition:background .22s ease,color .22s ease}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--border)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-@keyframes slideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-@keyframes spin{to{transform:rotate(360deg)}}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes glow{0%,100%{text-shadow:0 0 20px rgba(247,147,26,.4)}50%{text-shadow:0 0 40px rgba(247,147,26,.8)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-/* ── TICKER ── */
+body.theme-light{
+  --bg:#f9f5eb;--surface:#fffdf5;--surface2:#f1ead4;--border:#d4c9a0;--panel:#fffdf6;--soft:#f5efdf;
+  --orange:#c97a10;--orange-dim:#a06008;--amber:#d97706;--green:#059669;--red:#dc2626;
+  --text:#1a1200;--muted:#78716c;
+}
+body.theme-btc{
+  --bg:#0d0208;--surface:#160410;--surface2:#1e0618;--border:#2d1020;--panel:#190914;--soft:#210b1b;
+  --orange:#f7931a;--orange-dim:#c4740e;--amber:#fbbf24;--green:#10b981;--red:#ef4444;
+  --text:#ffe8d6;--muted:#8a6a5a;
+}
+body.theme-dark{--bg:#0a0800;--surface:#111008;--surface2:#1a1500;--border:#2a2200;--panel:#130f0b;--soft:#1c160d;--orange:#f7931a;--orange-dim:#c4740e;--amber:#fbbf24;--green:#10b981;--red:#ef4444;--text:#fef3c7;--muted:#78716c;}
+
 .ticker{background:var(--orange);height:28px;overflow:hidden;display:flex;align-items:center;border-bottom:1px solid #000}
 .ticker-track{display:flex;animation:ticker 28s linear infinite;white-space:nowrap}
 .ticker-track span{font-size:9px;letter-spacing:.2em;color:#000;padding:0 24px;text-transform:uppercase;font-weight:700}
 
-/* ── NAV ── */
 nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .nav-logo{font-family:var(--display);font-size:22px;letter-spacing:.04em;color:var(--orange)}
 .nav-sub{font-size:9px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase}
 .btc-price{font-size:11px;color:var(--orange);letter-spacing:.1em;display:flex;align-items:center;gap:6px}
 .price-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite}
 
-/* ── HERO ── */
 .hero{padding:60px 24px 40px;text-align:center;max-width:700px;margin:0 auto}
 .hero h1{font-family:var(--display);font-size:clamp(60px,14vw,130px);line-height:.85;color:var(--orange);animation:glow 3s infinite;margin-bottom:8px}
 .hero h2{font-family:var(--display);font-size:clamp(24px,5vw,48px);color:var(--text);letter-spacing:.04em;text-transform:uppercase;margin-bottom:20px;opacity:.7}
 .hero p{font-size:13px;color:var(--muted);line-height:1.8;max-width:480px;margin:0 auto 32px}
 
-/* ── STATS STRIP ── */
 .stats-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:2px;margin-bottom:2px}
 .stat{background:var(--surface);border:1px solid var(--border);padding:18px 20px}
 .stat-label{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .stat-value{font-family:var(--display);font-size:38px;line-height:1;color:var(--orange)}
 .stat-sub{font-size:9px;color:var(--muted);margin-top:3px}
 
-/* ── LAYOUT ── */
 .main{max-width:1100px;margin:0 auto;padding:24px}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:2px}
 @media(max-width:700px){.grid-2{grid-template-columns:1fr}}
@@ -55,24 +62,21 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24
 .card-title{font-family:var(--display);font-size:20px;text-transform:uppercase;letter-spacing:.04em;color:var(--orange);margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .card-title .dot{width:5px;height:5px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite}
 
-/* ── MEMBERS ── */
 .member-list{display:flex;flex-direction:column;gap:2px}
-.member{background:var(--surface2);border:1px solid var(--border);padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:border-color .2s}
+.member{background:var(--surface2);border:1px solid var(--border);padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:border-color .2s,transform .2s ease; animation:fadeIn .25s ease}
 .member:hover{border-color:var(--orange)}
 .member.active{border-color:var(--orange);background:#1a1200}
 .member-avatar{width:36px;height:36px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:18px;color:var(--orange);flex-shrink:0}
-.member-info{flex:1}
-.member-name{font-size:12px;font-weight:700;margin-bottom:2px}
+.member-info{flex:1;min-width:0}
+.member-name{font-size:12px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .member-sats{font-size:10px;color:var(--orange)}
 .member-contrib{font-size:9px;color:var(--muted)}
 .member-bar-wrap{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
 .member-bar{height:100%;background:var(--orange);border-radius:2px;transition:width .6s ease}
 
-/* ── CHART ── */
 .chart-wrap{position:relative;height:240px;margin-top:8px}
 canvas{width:100%!important}
 
-/* ── PAYOUT TABLE ── */
 .payout-table{width:100%;border-collapse:collapse}
 .payout-table th{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
 .payout-table td{font-size:11px;padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text)}
@@ -81,16 +85,17 @@ canvas{width:100%!important}
 .payout-table .pending{color:var(--muted)}
 .payout-table .next{color:var(--orange)}
 
-/* ── ADD MEMBER FORM ── */
 .form-row{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
 .form-input{flex:1;min-width:120px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:11px;padding:9px 12px;outline:none}
 .form-input:focus{border-color:var(--orange)}
 .form-btn{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:9px 18px;background:var(--orange);border:none;color:#000;cursor:pointer;font-weight:700;transition:background .2s}
 .form-btn:hover{background:var(--amber)}
+.form-btn:focus-visible,.secondary-btn:focus-visible,.theme-fab-btn:focus-visible,.member button:focus-visible,.nav-action:focus-visible{outline:2px solid rgba(247,147,26,.72);outline-offset:2px}
 .form-btn.ghost{background:transparent;border:1px solid var(--border);color:var(--muted)}
 .form-btn.ghost:hover{border-color:var(--orange);color:var(--orange)}
+.secondary-btn{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:9px 18px;background:transparent;border:1px solid var(--border);color:var(--text);cursor:pointer;transition:border-color .2s,color .2s}
+.secondary-btn:hover{border-color:var(--orange);color:var(--orange)}
 
-/* ── BTC TICKER ── */
 .btc-live{background:var(--surface2);border:1px solid var(--border);padding:16px 20px;margin-bottom:2px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .btc-big{font-family:var(--display);font-size:48px;line-height:1;color:var(--orange)}
 .btc-change{font-size:11px;padding:3px 10px;border-radius:2px}
@@ -98,117 +103,80 @@ canvas{width:100%!important}
 .btc-change.down{background:rgba(239,68,68,.15);color:var(--red)}
 .btc-meta{font-size:9px;color:var(--muted);line-height:1.8}
 
-/* ── MANIFESTO ── */
 .manifesto{background:var(--orange);padding:32px 24px;text-align:center;margin-top:2px}
 .manifesto p{font-family:var(--display);font-size:clamp(20px,4vw,36px);color:#000;letter-spacing:.04em}
 
-/* ── FOOTER ── */
+.demo-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(247,147,26,.3);background:rgba(247,147,26,.08);color:var(--orange);font-size:9px;letter-spacing:.12em;text-transform:uppercase;}
+.demo-pill::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite}
+
 footer{text-align:center;padding:24px;border-top:1px solid var(--border);font-size:9px;color:var(--muted);letter-spacing:.15em;line-height:2}
 footer a{color:var(--orange);text-decoration:none}
 
-/* ── THEMES ── */
-body.theme-light{
-  --bg:#f9f5eb;--surface:#fffdf5;--surface2:#f0ead6;--border:#d4c9a0;
-  --orange:#c97a10;--orange-dim:#a06008;--amber:#d97706;--green:#059669;--red:#dc2626;
-  --text:#1a1200;--muted:#78716c;
-}
-body.theme-light nav{background:rgba(249,245,235,.96)}
-body.theme-light .ticker{background:var(--orange)}
+.notice{margin: 14px 0 0; background: rgba(255,255,255,.02); border:1px solid var(--border); padding:10px 12px; color:var(--muted); font-size:10px; line-height:1.6}
+.notice strong{color:var(--text)}
 
-body.theme-btc{
-  --bg:#0d0208;--surface:#160410;--surface2:#1e0618;--border:#2d1020;
-  --orange:#f7931a;--orange-dim:#c4740e;--amber:#fbbf24;--green:#10b981;--red:#ef4444;
-  --text:#ffe8d6;--muted:#8a6a5a;
-}
-
-body.theme-dark{
-  --bg:#0a0800;--surface:#111008;--surface2:#1a1500;--border:#2a2200;
-  --orange:#f7931a;--orange-dim:#c4740e;--amber:#fbbf24;--green:#10b981;--red:#ef4444;
-  --text:#fef3c7;--muted:#78716c;
-}
-
-/* ── THEME FAB ── */
 .theme-fab{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
-.theme-fab-btn{width:44px;height:44px;border-radius:50%;background:var(--orange);border:2px solid var(--border);
-  color:#000;font-size:17px;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.5);
-  display:flex;align-items:center;justify-content:center;transition:transform .2s;font-family:var(--mono)}
+.theme-fab-btn{width:44px;height:44px;border-radius:50%;background:var(--orange);border:2px solid var(--border);color:#000;font-size:17px;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;transition:transform .2s;font-family:var(--mono)}
 .theme-fab-btn:hover{transform:scale(1.1)}
-.theme-panel{background:var(--surface);border:1px solid var(--border);padding:8px;
-  display:flex;flex-direction:column;gap:4px;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:160px}
-.theme-opt{display:flex;align-items:center;gap:10px;padding:9px 14px;background:transparent;
-  border:1px solid transparent;color:var(--muted);font-family:var(--mono);font-size:11px;
-  letter-spacing:.1em;cursor:pointer;text-align:left;transition:all .15s;text-transform:uppercase}
+.theme-panel{background:var(--surface);border:1px solid var(--border);padding:8px;display:flex;flex-direction:column;gap:4px;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:180px}
+.theme-opt{display:flex;align-items:center;gap:10px;padding:9px 14px;background:transparent;border:1px solid transparent;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.1em;cursor:pointer;text-align:left;transition:all .15s;text-transform:uppercase}
 .theme-opt:hover,.theme-opt.active{background:var(--orange);color:#000;border-color:var(--orange)}
 .theme-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+@media (prefers-reduced-motion: reduce){ *,*::before,*::after { animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; } }
 </style>
 </head>
 <body class="theme-dark">
-
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-track" id="tickerTrack"></div>
-</div>
-
-<!-- NAV -->
+<div class="ticker"><div class="ticker-track" id="tickerTrack"></div></div>
 <nav>
   <div>
     <div class="nav-logo">SatStockvel</div>
     <div class="nav-sub">Bitcoin Community Savings · T⁴Tech Solutions</div>
-  <div id="liveDate" style="font-size:9px;color:var(--muted);letter-spacing:.15em"></div>
+    <div id="liveDate" style="font-size:9px;color:var(--muted);letter-spacing:.15em"></div>
   </div>
-  <div class="btc-price">
-    <span class="price-dot"></span>
-    <span id="navPrice">Loading…</span>
-  </div>
+  <div class="btc-price"><span class="price-dot"></span><span id="navPrice">Loading…</span></div>
 </nav>
 
-<!-- BTC LIVE -->
 <div class="main">
   <div class="btc-live" id="btcLive">
     <div>
       <div style="font-size:9px;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px">Bitcoin · Live Price</div>
       <div class="btc-big" id="btcPrice">—</div>
     </div>
-    <div>
-      <span class="btc-change" id="btcChange">—</span>
-    </div>
-    <div class="btc-meta" id="btcMeta">
-      Fetching live data…
-    </div>
+    <div><span class="btc-change" id="btcChange">—</span></div>
+    <div class="btc-meta" id="btcMeta">Fetching live data…</div>
   </div>
 
-  <!-- STATS -->
+  <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+    <span class="demo-pill">Demo mode</span>
+    <span style="font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;">Simulated stokvel model · estimates only</span>
+  </div>
+
+  <div class="notice">
+    <strong>Security note:</strong> this dashboard is a front-end prototype. It validates input and keeps local data in the browser for demo purposes only. Real member data and payouts must be handled by an authenticated backend with server-side approval and audit logging.
+  </div>
+
   <div class="stats-strip" id="statsStrip"></div>
 
   <div class="grid-2" style="margin-top:2px">
-
-    <!-- MEMBERS -->
     <div class="card">
       <div class="card-title"><span class="dot"></span> Stokvel Members</div>
       <div class="member-list" id="memberList"></div>
       <div class="form-row">
-        <input class="form-input" id="newName" placeholder="Member name"/>
-        <input class="form-input" id="newMonthly" placeholder="Monthly (R)" type="number"/>
-        <button class="form-btn" onclick="addMember()">+ Add</button>
+        <input class="form-input" id="newName" placeholder="Member name" aria-label="Member name" maxlength="32"/>
+        <input class="form-input" id="newMonthly" placeholder="Monthly (R)" type="number" min="1" step="10" aria-label="Monthly contribution in rand"/>
+        <button class="form-btn" type="button" onclick="addMember()">+ Add</button>
       </div>
     </div>
 
-    <!-- ACCUMULATION CHART -->
     <div class="card">
       <div class="card-title"><span class="dot"></span> BTC Accumulation</div>
-      <div class="chart-wrap">
-        <canvas id="accChart"></canvas>
-      </div>
-      <div style="font-size:9px;color:var(--muted);margin-top:8px;letter-spacing:.12em">
-        Projected BTC per member over 12 months at current price
-      </div>
+      <div class="chart-wrap"><canvas id="accChart"></canvas></div>
+      <div style="font-size:9px;color:var(--muted);margin-top:8px;letter-spacing:.12em">Projected BTC per member over 12 months at current price</div>
     </div>
-
   </div>
 
   <div class="grid-2" style="margin-top:2px">
-
-    <!-- PAYOUT SCHEDULE -->
     <div class="card">
       <div class="card-title"><span class="dot"></span> Payout Schedule</div>
       <table class="payout-table" id="payoutTable">
@@ -219,105 +187,326 @@ body.theme-dark{
       </table>
     </div>
 
-    <!-- POOL SUMMARY -->
     <div class="card">
       <div class="card-title"><span class="dot"></span> Pool Summary</div>
       <div id="poolSummary" style="display:flex;flex-direction:column;gap:2px"></div>
       <div style="margin-top:16px">
         <div class="card-title" style="font-size:16px;margin-bottom:12px"><span class="dot"></span> Contribution Settings</div>
         <div class="form-row">
-          <input class="form-input" id="cycleMonths" placeholder="Cycle (months)" type="number" value="12"/>
-          <button class="form-btn" onclick="recalculate()">Recalculate</button>
-          <button class="form-btn ghost" onclick="resetAll()">Reset</button>
+          <input class="form-input" id="cycleMonths" placeholder="Cycle (months)" type="number" min="1" max="60" value="12" aria-label="Number of months in cycle"/>
+          <button class="form-btn" type="button" onclick="recalculate()">Recalculate</button>
+          <button class="form-btn ghost" type="button" onclick="resetAll()">Reset</button>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
-<div class="manifesto">
-  <p>SAVE IN SATS. PAYOUT IN STACKS. UBUNTU THROUGH BITCOIN.</p>
-</div>
+<div class="manifesto"><p>SAVE IN SATS. PAYOUT IN STACKS. UBUNTU THROUGH BITCOIN.</p></div>
 
 <footer>
   SatStockvel · T⁴Tech Solutions · Built in Johannesburg<br/>
   <a href="https://geeradebe.github.io/portfolio">geeradebe.github.io</a> · <a href="https://x.com/GeeRadebe">@GeeRadebe</a>
 </footer>
 
-<!-- Chart.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
-// ── STATE ──────────────────────────────────────────────────────────────────
+const STORAGE_KEY = 'satstockvel_state_v1';
+const SECURE_HTML_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+
+function escapeHtml(str) {
+  return String(str ?? '').replace(/[&<>"']/g, (char) => SECURE_HTML_MAP[char] || char);
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function getDefaultState() {
+  return {
+    members: [
+      { id: 1, name: 'Tefo', monthly: 500, paid: [1, 2, 3], paidOut: false },
+      { id: 2, name: 'Naledi', monthly: 500, paid: [1, 2], paidOut: false },
+      { id: 3, name: 'Sipho', monthly: 1000, paid: [1, 2, 3], paidOut: true },
+      { id: 4, name: 'Kelebone', monthly: 500, paid: [1], paidOut: false },
+      { id: 5, name: 'Thabo', monthly: 750, paid: [1, 2, 3], paidOut: false },
+      { id: 6, name: 'Lesego', monthly: 500, paid: [1, 2], paidOut: false }
+    ],
+    cycleMonths: 12,
+    theme: 'theme-dark'
+  };
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return getDefaultState();
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') return getDefaultState();
+    const safe = getDefaultState();
+    safe.members = Array.isArray(parsed.members) && parsed.members.length ? parsed.members.map((m, idx) => ({
+      id: Number(m.id) || idx + 1,
+      name: String(m.name || 'Member').slice(0, 32),
+      monthly: clamp(Number(m.monthly) || 500, 1, 100000),
+      paid: Array.isArray(m.paid) ? m.paid.map(Number).filter((n) => Number.isFinite(n)) : [],
+      paidOut: !!m.paidOut
+    })) : safe.members;
+    safe.cycleMonths = clamp(Number(parsed.cycleMonths) || 12, 1, 60);
+    safe.theme = ['theme-dark','theme-btc','theme-light'].includes(parsed.theme) ? parsed.theme : 'theme-dark';
+    return safe;
+  } catch (error) {
+    console.warn('SatStockvel state load failed:', error);
+    return getDefaultState();
+  }
+}
+
+let state = loadState();
 let btcUSD = 0;
-let zarPerUSD = 18.8; // fallback rate
+let zarPerUSD = 18.8;
 let btcZAR = 0;
 let chart = null;
+let priceFetchError = false;
 
-let members = [
-  {id:1, name:"Tefo",    monthly:500,  paid:[1,2,3], paidOut:false},
-  {id:2, name:"Naledi",  monthly:500,  paid:[1,2],   paidOut:false},
-  {id:3, name:"Sipho",   monthly:1000, paid:[1,2,3], paidOut:true},
-  {id:4, name:"Kelebone",monthly:500,  paid:[1],     paidOut:false},
-  {id:5, name:"Thabo",   monthly:750,  paid:[1,2,3], paidOut:false},
-  {id:6, name:"Lesego",  monthly:500,  paid:[1,2],   paidOut:false},
+const TICKER_ITEMS = [
+  'SATSTOCKVEL','UBUNTU THROUGH BITCOIN','SAVE IN SATS','STOKVEL TRADITION','PAYOUT IN STACKS','T⁴TECH SOLUTIONS','BUILT IN JHB','HODL TOGETHER'
 ];
 
-const CYCLE = 12;
-let cycleMonths = 12;
+function persistState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (error) {
+    console.warn('State persistence failed:', error);
+  }
+}
 
-// ── TICKER ────────────────────────────────────────────────────────────────
-const TICKER_ITEMS = ["SATSTOCKVEL","UBUNTU THROUGH BITCOIN","SAVE IN SATS","STOKVEL TRADITION","PAYOUT IN STACKS","T⁴TECH SOLUTIONS","BUILT IN JHB","HODL TOGETHER"];
-const track = document.getElementById('tickerTrack');
-[...TICKER_ITEMS,...TICKER_ITEMS].forEach(t=>{
-  const s=document.createElement('span');
-  s.innerHTML=`${t} <span style="opacity:.4">◆</span>`;
-  track.appendChild(s);
-});
+function setTheme(nextTheme, forceButton) {
+  ['theme-dark', 'theme-btc', 'theme-light'].forEach((themeName) => document.body.classList.remove(themeName));
+  document.body.classList.add(nextTheme);
+  state.theme = nextTheme;
+  persistState();
+  document.querySelectorAll('.theme-opt').forEach((button) => button.classList.toggle('active', button.dataset.theme === nextTheme));
+  if (forceButton) forceButton.classList.add('active');
+  hideThemePanel();
+}
 
-// ── BTC PRICE ─────────────────────────────────────────────────────────────
-async function fetchBTC(){
-  try{
+function toggleThemePanel() {
+  const panel = document.getElementById('themePanel');
+  const show = panel.style.display !== 'flex';
+  panel.style.display = show ? 'flex' : 'none';
+}
+
+function hideThemePanel() {
+  const panel = document.getElementById('themePanel');
+  if (panel) panel.style.display = 'none';
+}
+
+function updateDate() {
+  const el = document.getElementById('liveDate');
+  if (!el) return;
+  const now = new Date();
+  el.textContent = now.toLocaleDateString('en-ZA', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) + ' · ' + now.toLocaleTimeString('en-ZA', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
+
+function renderTicker() {
+  const track = document.getElementById('tickerTrack');
+  if (!track) return;
+  const items = [...TICKER_ITEMS, ...TICKER_ITEMS];
+  track.innerHTML = items.map((item) => `<span>${escapeHtml(item)} <span style="opacity:.4">◆</span></span>`).join('');
+}
+
+async function fetchBTC() {
+  try {
     const res = await fetch('https://api.coinbase.com/v2/prices/BTC-USD/spot');
     const data = await res.json();
-    btcUSD = parseFloat(data.data.amount);
-    // fetch ZAR rate
-    try{
-      const fxRes = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-      const fxData = await fxRes.json();
-      zarPerUSD = fxData.rates.ZAR || 18.8;
-    }catch{}
+    btcUSD = parseFloat(data?.data?.amount || 0);
+    const fxRes = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+    const fxData = await fxRes.json();
+    zarPerUSD = fxData?.rates?.ZAR || 18.8;
     btcZAR = btcUSD * zarPerUSD;
-    updatePriceUI();
+    priceFetchError = false;
+    updatePriceUI(false);
     render();
-  }catch{
-    // use a reasonable fallback
+  } catch (error) {
     btcUSD = 86000;
     btcZAR = btcUSD * zarPerUSD;
+    priceFetchError = true;
     updatePriceUI(true);
     render();
   }
 }
 
-function updatePriceUI(fallback=false){
-  const zarFmt = 'R'+Math.round(btcZAR).toLocaleString('en-ZA');
-  const usdFmt = '$'+Math.round(btcUSD).toLocaleString('en-US');
-  document.getElementById('btcPrice').textContent = zarFmt;
-  document.getElementById('navPrice').textContent = zarFmt;
-  document.getElementById('btcChange').textContent = fallback?'Offline estimate':'Live';
-  document.getElementById('btcChange').className = 'btc-change up';
-  document.getElementById('btcMeta').innerHTML = `
-    <div>${usdFmt} USD</div>
-    <div>1 USD = R${zarPerUSD.toFixed(2)}</div>
-    <div>${fallback?'Cached data':'Live · Coinbase'}</div>
-  `;
+function updatePriceUI(fallback) {
+  const zarFmt = 'R' + Math.round(btcZAR).toLocaleString('en-ZA');
+  const usdFmt = '$' + Math.round(btcUSD).toLocaleString('en-US');
+  const priceEl = document.getElementById('btcPrice');
+  const navPrice = document.getElementById('navPrice');
+  const changeEl = document.getElementById('btcChange');
+  const metaEl = document.getElementById('btcMeta');
+  if (priceEl) priceEl.textContent = zarFmt;
+  if (navPrice) navPrice.textContent = zarFmt;
+  if (changeEl) {
+    changeEl.textContent = fallback ? 'Offline estimate' : 'Live';
+    changeEl.className = 'btc-change up';
+  }
+  if (metaEl) {
+    metaEl.innerHTML = `
+      <div>${escapeHtml(usdFmt)} USD</div>
+      <div>1 USD = R${Number(zarPerUSD).toFixed(2)}</div>
+      <div>${fallback ? 'Cached data' : 'Live · Coinbase'}</div>
+    `;
+  }
 }
 
-// ── RENDER ─────────────────────────────────────────────────────────────────
-function satsForRand(rand){ return btcZAR>0 ? Math.round((rand/btcZAR)*100000000) : 0; }
-function randToBTC(rand){ return btcZAR>0 ? rand/btcZAR : 0; }
+function satsForRand(rand) {
+  return btcZAR > 0 ? Math.round((rand / btcZAR) * 100000000) : 0;
+}
 
-function render(){
+function randToBTC(rand) {
+  return btcZAR > 0 ? rand / btcZAR : 0;
+}
+
+function renderStats() {
+  const totalMonthly = state.members.reduce((sum, member) => sum + Number(member.monthly || 0), 0);
+  const cyclePool = totalMonthly * state.cycleMonths;
+  const totalSats = satsForRand(cyclePool);
+  const avgPayout = cyclePool / Math.max(state.members.length, 1);
+  const stats = [
+    { label: 'Members', value: state.members.length, sub: 'Active' },
+    { label: 'Monthly Pool', value: 'R' + totalMonthly.toLocaleString('en-ZA'), sub: 'Combined' },
+    { label: 'Cycle Pool', value: 'R' + cyclePool.toLocaleString('en-ZA'), sub: state.cycleMonths + ' months' },
+    { label: 'Pool in BTC', value: (cyclePool / btcZAR || 0).toFixed(4), sub: 'Bitcoin' },
+    { label: 'Avg Payout', value: 'R' + Math.round(avgPayout).toLocaleString('en-ZA'), sub: 'Per member' },
+    { label: 'Total Sats', value: (totalSats / 100000).toFixed(0) + 'K', sub: 'Satoshis' }
+  ];
+  const container = document.getElementById('statsStrip');
+  if (!container) return;
+  container.innerHTML = stats.map((stat) => `
+    <div class="stat">
+      <div class="stat-label">${escapeHtml(stat.label)}</div>
+      <div class="stat-value">${escapeHtml(String(stat.value))}</div>
+      <div class="stat-sub">${escapeHtml(stat.sub)}</div>
+    </div>
+  `).join('');
+}
+
+function renderMembers() {
+  const container = document.getElementById('memberList');
+  if (!container) return;
+  const maxMonthly = Math.max(...state.members.map((member) => Number(member.monthly || 0)), 1);
+  container.innerHTML = state.members.map((member) => {
+    const memberMonthly = Number(member.monthly || 0);
+    const cycleTotalSats = satsForRand(memberMonthly * state.cycleMonths);
+    const barWidth = Math.round((memberMonthly / maxMonthly) * 100);
+    return `
+      <div class="member ${member.paidOut ? 'active' : ''}">
+        <div class="member-avatar">${escapeHtml((member.name || 'M').slice(0, 1).toUpperCase())}</div>
+        <div class="member-info">
+          <div class="member-name">${escapeHtml(member.name || 'Member')} ${member.paidOut ? '✓' : ''}</div>
+          <div class="member-sats">${cycleTotalSats.toLocaleString('en-ZA')} sats / cycle</div>
+          <div class="member-contrib">R${memberMonthly.toLocaleString('en-ZA')}/mo · ${Array.isArray(member.paid) ? member.paid.length : 0} payments made</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px;min-width:80px">
+          <div class="member-bar-wrap"><div class="member-bar" style="width:${barWidth}%"></div></div>
+          <div style="font-size:8px;color:var(--muted);text-align:right">R${memberMonthly.toLocaleString('en-ZA')}</div>
+        </div>
+        <button type="button" aria-label="Remove ${escapeHtml(member.name || 'member')}" onclick="removeMember(${member.id})" style="background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:12px;padding:4px">✕</button>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderChart() {
+  const canvas = document.getElementById('accChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const months = Array.from({ length: state.cycleMonths }, (_, index) => `M${index + 1}`);
+  const colors = ['#f7931a', '#fbbf24', '#10b981', '#60a5fa', '#a78bfa', '#f472b6', '#34d399', '#fb7185'];
+
+  const datasets = state.members.map((member, index) => ({
+    label: member.name,
+    data: months.map((_, monthIndex) => Number((randToBTC((Number(member.monthly) || 0) * (monthIndex + 1))).toFixed(6))),
+    borderColor: colors[index % colors.length],
+    backgroundColor: colors[index % colors.length] + '22',
+    borderWidth: 2,
+    pointRadius: 2,
+    tension: 0.4,
+    fill: false
+  }));
+
+  if (chart) chart.destroy();
+  chart = new Chart(ctx, {
+    type: 'line',
+    data: { labels: months, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: { color: '#78716c', font: { size: 9, family: "'IBM Plex Mono'" }, boxWidth: 10 }
+        },
+        tooltip: {
+          backgroundColor: '#1a1500',
+          titleColor: '#f7931a',
+          bodyColor: '#fef3c7',
+          callbacks: {
+            label: (context) => `${context.dataset.label}: ${Number(context.parsed.y).toFixed(6)} BTC`
+          }
+        }
+      },
+      scales: {
+        x: { grid: { color: '#2a2200' }, ticks: { color: '#78716c', font: { size: 9 } } },
+        y: { grid: { color: '#2a2200' }, ticks: { color: '#78716c', font: { size: 9 }, callback: (value) => `${Number(value).toFixed(4)}₿` } }
+      }
+    }
+  });
+}
+
+function renderPayouts() {
+  const tbody = document.getElementById('payoutBody');
+  if (!tbody) return;
+
+  const sorted = [...state.members].sort((a, b) => (Number(b.monthly) || 0) - (Number(a.monthly) || 0));
+  tbody.innerHTML = sorted.map((member, index) => {
+    const month = index + 1;
+    const pool = state.members.reduce((sum, current) => sum + (Number(current.monthly) || 0), 0) * month;
+    const btcVal = randToBTC(pool);
+    const statusClass = member.paidOut ? 'paid' : index === 0 ? 'next' : 'pending';
+    const statusLabel = member.paidOut ? '✓ Paid' : index === 0 ? '→ Next' : 'Pending';
+    return `
+      <tr>
+        <td>Month ${month}</td>
+        <td>${escapeHtml(member.name)}</td>
+        <td class="${statusClass}">${btcVal.toFixed(4)} BTC</td>
+        <td>R${Math.round(pool).toLocaleString('en-ZA')}</td>
+        <td class="${statusClass}">${statusLabel}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function renderPool() {
+  const totalMonthly = state.members.reduce((sum, member) => sum + (Number(member.monthly) || 0), 0);
+  const cycleTotal = totalMonthly * state.cycleMonths;
+  const rows = [
+    ['Monthly contributions', 'R' + totalMonthly.toLocaleString('en-ZA')],
+    ['Cycle total (ZAR)', 'R' + cycleTotal.toLocaleString('en-ZA')],
+    ['Cycle total (BTC)', randToBTC(cycleTotal).toFixed(6) + ' ₿'],
+    ['Cycle total (Sats)', satsForRand(cycleTotal).toLocaleString('en-ZA')],
+    ['Members in pool', state.members.length],
+    ['Cycle length', state.cycleMonths + ' months'],
+    ['Next payout to', [...state.members].sort((a, b) => (Number(b.monthly) || 0) - (Number(a.monthly) || 0))[0]?.name || '—']
+  ];
+  const container = document.getElementById('poolSummary');
+  if (!container) return;
+  container.innerHTML = rows.map(([key, value]) => `
+    <div style="background:var(--surface2);border:1px solid var(--border);padding:10px 14px;display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:10px;color:var(--muted)">${escapeHtml(key)}</span>
+      <span style="font-size:11px;color:var(--orange);font-weight:700">${escapeHtml(String(value))}</span>
+    </div>
+  `).join('');
+}
+
+function render() {
   renderStats();
   renderMembers();
   renderChart();
@@ -325,202 +514,101 @@ function render(){
   renderPool();
 }
 
-function renderStats(){
-  const totalMonthly = members.reduce((s,m)=>s+m.monthly,0);
-  const cyclePool = totalMonthly * cycleMonths;
-  const totalSats = satsForRand(cyclePool);
-  const avgPayout = cyclePool / Math.max(members.length,1);
-  document.getElementById('statsStrip').innerHTML = [
-    {label:'Members',value:members.length,sub:'Active'},
-    {label:'Monthly Pool',value:'R'+totalMonthly.toLocaleString(),sub:'Combined'},
-    {label:'Cycle Pool',value:'R'+cyclePool.toLocaleString(),sub:`${cycleMonths} months`},
-    {label:'Pool in BTC',value:(cyclePool/btcZAR||0).toFixed(4),sub:'Bitcoin'},
-    {label:'Avg Payout',value:'R'+Math.round(avgPayout).toLocaleString(),sub:'Per member'},
-    {label:'Total Sats',value:(totalSats/100000).toFixed(0)+'K',sub:'Satoshis'},
-  ].map(s=>`
-    <div class="stat">
-      <div class="stat-label">${s.label}</div>
-      <div class="stat-value">${s.value}</div>
-      <div class="stat-sub">${s.sub}</div>
-    </div>
-  `).join('');
+function addMember() {
+  const nameInput = document.getElementById('newName');
+  const monthlyInput = document.getElementById('newMonthly');
+  if (!nameInput || !monthlyInput) return;
+
+  const rawName = (nameInput.value || '').trim();
+  const rawMonthly = Number(monthlyInput.value || 0);
+  if (!rawName) {
+    alert('Please enter a member name before adding them.');
+    nameInput.focus();
+    return;
+  }
+  if (!Number.isFinite(rawMonthly) || rawMonthly < 1) {
+    alert('Monthly contribution must be greater than zero.');
+    monthlyInput.focus();
+    return;
+  }
+  if (state.members.some((member) => member.name.toLowerCase() === rawName.toLowerCase())) {
+    alert('A member with this name already exists.');
+    nameInput.focus();
+    return;
+  }
+
+  state.members.push({
+    id: Date.now(),
+    name: rawName.slice(0, 32),
+    monthly: clamp(rawMonthly, 1, 100000),
+    paid: [],
+    paidOut: false
+  });
+  nameInput.value = '';
+  monthlyInput.value = '';
+  persistState();
+  render();
 }
 
-function renderMembers(){
-  const maxMonthly = Math.max(...members.map(m=>m.monthly));
-  document.getElementById('memberList').innerHTML = members.map(m=>`
-    <div class="member ${m.paidOut?'active':''}">
-      <div class="member-avatar">${m.name[0]}</div>
-      <div class="member-info">
-        <div class="member-name">${m.name} ${m.paidOut?'✓':''}</div>
-        <div class="member-sats">${satsForRand(m.monthly*cycleMonths).toLocaleString()} sats / cycle</div>
-        <div class="member-contrib">R${m.monthly}/mo · ${m.paid.length} payments made</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:4px;min-width:80px">
-        <div class="member-bar-wrap"><div class="member-bar" style="width:${Math.round((m.monthly/maxMonthly)*100)}%"></div></div>
-        <div style="font-size:8px;color:var(--muted);text-align:right">R${m.monthly}</div>
-      </div>
-      <button onclick="removeMember(${m.id})" style="background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:12px;padding:4px">✕</button>
-    </div>
-  `).join('');
+function removeMember(id) {
+  const nextMembers = state.members.filter((member) => member.id !== id);
+  if (nextMembers.length === state.members.length) return;
+  state.members = nextMembers;
+  persistState();
+  render();
 }
 
-function renderChart(){
-  const ctx = document.getElementById('accChart').getContext('2d');
-  const months = Array.from({length:cycleMonths},(_, i)=>`M${i+1}`);
-  const colors = ['#f7931a','#fbbf24','#10b981','#60a5fa','#a78bfa','#f472b6','#34d399','#fb7185'];
+function recalculate() {
+  const cycleInput = document.getElementById('cycleMonths');
+  if (!cycleInput) return;
+  const parsed = Number(cycleInput.value || state.cycleMonths);
+  state.cycleMonths = clamp(parsed, 1, 60);
+  persistState();
+  render();
+}
 
-  const datasets = members.map((m,i)=>({
-    label: m.name,
-    data: months.map((_,mi)=> parseFloat((randToBTC(m.monthly*(mi+1))).toFixed(6))),
-    borderColor: colors[i%colors.length],
-    backgroundColor: colors[i%colors.length]+'22',
-    borderWidth: 2,
-    pointRadius: 2,
-    tension: 0.4,
-    fill: false,
-  }));
+function resetAll() {
+  const reset = getDefaultState();
+  state = { ...reset, theme: state.theme };
+  persistState();
+  applyThemeState();
+  render();
+}
 
-  if(chart){ chart.destroy(); }
-  chart = new Chart(ctx,{
-    type:'line',
-    data:{ labels:months, datasets },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      plugins:{
-        legend:{ labels:{ color:'#78716c', font:{size:9, family:"'IBM Plex Mono'"}, boxWidth:10 }},
-        tooltip:{ backgroundColor:'#1a1500', titleColor:'#f7931a', bodyColor:'#fef3c7',
-          callbacks:{ label: ctx=>`${ctx.dataset.label}: ${ctx.parsed.y.toFixed(6)} BTC` }}
-      },
-      scales:{
-        x:{ grid:{color:'#2a2200'}, ticks:{color:'#78716c', font:{size:9}} },
-        y:{ grid:{color:'#2a2200'}, ticks:{color:'#78716c', font:{size:9},
-          callback: v=>`${v.toFixed(4)}₿` }}
-      }
-    }
+function applyThemeState() {
+  document.body.classList.remove('theme-dark', 'theme-btc', 'theme-light');
+  document.body.classList.add(state.theme);
+  document.querySelectorAll('.theme-opt').forEach((button) => {
+    const active = button.dataset.theme === state.theme;
+    button.classList.toggle('active', active);
   });
 }
 
-function renderPayouts(){
-  const sorted = [...members].sort((a,b)=>b.monthly-a.monthly);
-  document.getElementById('payoutBody').innerHTML = sorted.map((m,i)=>{
-    const month = i+1;
-    const pool = members.reduce((s,mb)=>s+mb.monthly,0) * month;
-    const btcVal = randToBTC(pool);
-    const status = m.paidOut ? 'paid' : (i===0 ? 'next' : 'pending');
-    const statusLabel = m.paidOut ? '✓ Paid' : (i===0 ? '→ Next' : 'Pending');
-    return `<tr>
-      <td>Month ${month}</td>
-      <td>${m.name}</td>
-      <td class="${status}">${btcVal.toFixed(4)} BTC</td>
-      <td>R${Math.round(pool).toLocaleString()}</td>
-      <td class="${status}">${statusLabel}</td>
-    </tr>`;
-  }).join('');
+function handleOutsideThemeClick(event) {
+  const panel = document.getElementById('themePanel');
+  const fab = document.getElementById('themeFab');
+  if (panel && fab && !fab.contains(event.target)) {
+    hideThemePanel();
+  }
 }
 
-function renderPool(){
-  const totalM = members.reduce((s,m)=>s+m.monthly,0);
-  const cycleTotal = totalM * cycleMonths;
-  const rows = [
-    ['Monthly contributions', 'R'+totalM.toLocaleString()],
-    ['Cycle total (ZAR)', 'R'+cycleTotal.toLocaleString()],
-    ['Cycle total (BTC)', (randToBTC(cycleTotal)).toFixed(6)+' ₿'],
-    ['Cycle total (Sats)', satsForRand(cycleTotal).toLocaleString()],
-    ['Members in pool', members.length],
-    ['Cycle length', cycleMonths+' months'],
-    ['Next payout to', members.sort((a,b)=>b.monthly-a.monthly)[0]?.name||'—'],
-  ];
-  document.getElementById('poolSummary').innerHTML = rows.map(([k,v])=>`
-    <div style="background:var(--surface2);border:1px solid var(--border);padding:10px 14px;display:flex;justify-content:space-between;align-items:center">
-      <span style="font-size:10px;color:var(--muted)">${k}</span>
-      <span style="font-size:11px;color:var(--orange);font-weight:700">${v}</span>
-    </div>
-  `).join('');
-}
-
-// ── ACTIONS ────────────────────────────────────────────────────────────────
-function addMember(){
-  const name = document.getElementById('newName').value.trim();
-  const monthly = parseInt(document.getElementById('newMonthly').value)||500;
-  if(!name) return;
-  members.push({id:Date.now(),name,monthly,paid:[],paidOut:false});
-  document.getElementById('newName').value='';
-  document.getElementById('newMonthly').value='';
-  render();
-}
-
-function removeMember(id){
-  members = members.filter(m=>m.id!==id);
-  render();
-}
-
-function recalculate(){
-  cycleMonths = parseInt(document.getElementById('cycleMonths').value)||12;
-  render();
-}
-
-function resetAll(){
-  members = [
-    {id:1,name:"Tefo",monthly:500,paid:[1,2,3],paidOut:false},
-    {id:2,name:"Naledi",monthly:500,paid:[1,2],paidOut:false},
-    {id:3,name:"Sipho",monthly:1000,paid:[1,2,3],paidOut:true},
-    {id:4,name:"Kelebone",monthly:500,paid:[1],paidOut:false},
-    {id:5,name:"Thabo",monthly:750,paid:[1,2,3],paidOut:false},
-    {id:6,name:"Lesego",monthly:500,paid:[1,2],paidOut:false},
-  ];
-  cycleMonths=12;
-  render();
-}
-
-
-// ── THEME ──
-let fabOpen=false;
-function toggleFab(){fabOpen=!fabOpen;document.getElementById('themePanel').style.display=fabOpen?'flex':'none';}
-function setTheme(cls,btn){
-  ['theme-dark','theme-btc','theme-light'].forEach(t=>document.body.classList.remove(t));
-  document.body.classList.add(cls);
-  document.querySelectorAll('.theme-opt').forEach(b=>b.classList.remove('active'));
-  if(btn)btn.classList.add('active');
-  fabOpen=false;document.getElementById('themePanel').style.display='none';
-  try{localStorage.setItem('ss-theme',cls);}catch{}
-}
-// Restore theme
-try{const s=localStorage.getItem('ss-theme');if(s){const b=document.querySelector(`[onclick="setTheme('${s}',this)"]`);setTheme(s,b);}}catch{}
-// Close on outside click
-document.addEventListener('click',e=>{if(fabOpen&&!document.getElementById('themeFab').contains(e.target)){fabOpen=false;document.getElementById('themePanel').style.display='none';}});
-// Live date
-function updateDate(){
-  const now=new Date();
-  const d=now.toLocaleDateString('en-ZA',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
-  const t=now.toLocaleTimeString('en-ZA',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  const el=document.getElementById('liveDate');
-  if(el)el.textContent=d+' · '+t;
-}
+document.addEventListener('click', handleOutsideThemeClick);
 updateDate();
-setInterval(updateDate,1000);
-
-// ── INIT ──────────────────────────────────────────────────────────────────
+setInterval(updateDate, 1000);
+renderTicker();
+applyThemeState();
 fetchBTC();
-// refresh price every 60s
 setInterval(fetchBTC, 60000);
 </script>
 
-<!-- THEME FAB -->
 <div class="theme-fab" id="themeFab">
   <div class="theme-panel" id="themePanel" style="display:none">
-    <button class="theme-opt active" onclick="setTheme('theme-dark',this)">
-      <span class="theme-dot" style="background:#f7931a"></span> Bitcoin Dark
-    </button>
-    <button class="theme-opt" onclick="setTheme('theme-btc',this)">
-      <span class="theme-dot" style="background:#f7931a;box-shadow:0 0 6px #f7931a"></span> BTC Glow
-    </button>
-    <button class="theme-opt" onclick="setTheme('theme-light',this)">
-      <span class="theme-dot" style="background:#c97a10"></span> Paper Light
-    </button>
+    <button type="button" class="theme-opt active" data-theme="theme-dark" onclick="setTheme('theme-dark', this)"><span class="theme-dot" style="background:#f7931a"></span>Bitcoin Dark</button>
+    <button type="button" class="theme-opt" data-theme="theme-btc" onclick="setTheme('theme-btc', this)"><span class="theme-dot" style="background:#f7931a;box-shadow:0 0 6px #f7931a"></span>BTC Glow</button>
+    <button type="button" class="theme-opt" data-theme="theme-light" onclick="setTheme('theme-light', this)"><span class="theme-dot" style="background:#c97a10"></span>Paper Light</button>
   </div>
-  <button class="theme-fab-btn" onclick="toggleFab()" title="Change theme">◑</button>
+  <button class="theme-fab-btn" type="button" onclick="toggleThemePanel()" title="Change theme">◑</button>
 </div>
 
 </body>
-  </html>
+</html>
